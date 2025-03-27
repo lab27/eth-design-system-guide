@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta property="og:title" content="Figma-to-Code für ETH Entwickler">
+  <meta property="og:site_name" content="Staffnet">
+  
+  <link rel="stylesheet" href="css.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+  <meta name="theme-color" content="#215CAF">
+
+  <title>Figma-to-Code für ETH Entwickler – Staffnet | ETH Zürich</title>
+
+  <style>
+    :root {
+      --eth-blue: #215CAF;
+      --eth-blue-80: #4D7DBF;
+      --spacing-2: 0.5rem;
+      --spacing-4: 1rem;
+      --border-radius-md: 0.25rem;
+    }
+
+    .button {
+      background-color: var(--eth-blue);
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: var(--border-radius-md);
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .button--secondary {
+      background-color: white;
+      border: 1px solid var(--eth-blue);
+      color: var(--eth-blue);
+    }
+    
+    .color-sample {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.5rem;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+    
+    .version-info {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #666;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .form-group select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+      min-width: 200px;
+    }
+
+    .code-block {
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .workflow-diagram {
+      width: 100%;
+      max-width: 800px;
+      margin: 2rem auto;
+      display: block;
+      border: 1px solid #e0e0e0;
+      border-radius: 0.25rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .feature-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 0.25rem;
+      padding: 1.5rem;
+      background-color: white;
+    }
+
+    .feature-card__icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      color: var(--eth-blue);
+    }
+
+    .feature-card__title {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .feature-card__description {
+      margin: 0;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .step-list {
+      counter-reset: step-counter;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .step-list li {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1.5rem;
+      counter-increment: step-counter;
+    }
+
+    .step-list li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.75rem;
+      height: 1.75rem;
+      background-color: var(--eth-blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .figma-embed {
+      width: 100%;
+      height: 400px;
+      border: 1px solid #e0e0e0;
+      border-radius: 0.25rem;
+      margin: 1.5rem 0;
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .figma-embed img {
+      max-width: 200px;
+      margin-bottom: 1rem;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab.active {
+      border-bottom: 2px solid var(--eth-blue);
+      color: var(--eth-blue);
+      font-weight: bold;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .eth-alert {
+      padding: 1rem;
+      border-radius: 0.25rem;
+      border-left: 4px solid #215CAF;
+      background-color: #E6EDF7;
+      margin-bottom: 1rem;
+    }
+    
+    /* Custom theme overrides for Prism */
+    code[class*="language-"], pre[class*="language-"] {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* Optional: theme customization for better ETH branding */
+    .token.property, .token.tag, .token.constant, .token.symbol, .token.deleted {
+      color: #215CAF;
+    }
+    
+    .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted {
+      color: #007894;
+    }
+  </style>
+</head>
+
+<body class="widepage eth-blue">
+  <div class="site-wrapper overviewpage">
+    <header class="site-header header--with-department-breadcrumb">
+      <div class="header__logos header__container">
+        <a href="https://ethz.ch/de.html" title="Zur Startseite der ETH Zürich">
+          <svg viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg" class="main-eth-logo" aria-label="ETH homepage">
+            <path
+              d="M43.6892 7.59685H39.3218L40.8555 0H3.90295L0 19.6252H14.7315L15.7334 14.5606H7.02833L7.52612 12.0283H16.2369L17.1209 7.59685H8.43034L8.92687 5.06457H22.7592L19.8638 19.6252H25.8707L28.7649 5.06457H33.8077L30.9135 19.6252H36.9665L38.4642 12.0283H42.8303L41.3338 19.6252H47.3577L51.2632 0H45.2229L43.6892 7.59685ZM69.4622 2.53228H71.4717L71.9695 0H69.9695L69.4622 2.53228ZM74.616 2.53228H76.6267L77.1232 0H75.1232L74.616 2.53228ZM93.4111 2.53228H95.4205L95.9196 0H93.9183L93.4111 2.53228ZM103.47 6.27247C99.9631 6.27247 97.5024 8.76677 96.7148 13.1172C96.5907 13.7981 96.5275 14.4888 96.5258 15.181C96.5258 18.1527 98.3109 20 101.189 20C102.013 20.0022 102.829 19.8372 103.588 19.515C104.347 19.1928 105.033 18.7199 105.606 18.1248L105.623 18.1058L104.509 16.7333L104.489 16.7093L104.467 16.7321C104.087 17.2105 103.604 17.597 103.055 17.8628C102.506 18.1287 101.905 18.2671 101.295 18.2679C99.9234 18.2679 98.4571 17.4411 98.4571 15.1266C98.4621 14.4552 98.5331 13.786 98.6688 13.1286C98.8751 11.7182 99.4666 10.3928 100.378 9.29981C100.745 8.89298 101.193 8.56784 101.694 8.34522C102.194 8.1226 102.734 8.00742 103.281 8.00708C103.806 7.9833 104.326 8.10937 104.782 8.37067C105.238 8.63197 105.611 9.0178 105.858 9.4834L105.874 9.50999L107.293 8.29956L107.313 8.28183L107.298 8.26031C106.89 7.62018 106.321 7.09939 105.649 6.75041C104.977 6.40142 104.225 6.23657 103.47 6.27247Z" />
+          </svg> 
+        </a>
+        <div class="header__headlines">
+          <h2 class="header__headline--big" aria-label="Header Staffnet">
+            <a href="#" title="Startseite">Staffnet</a>
+          </h2>
+        </div>
+      </div>
+    </header>
+
+    <section id="content" class="site-content">
+      <div id="contentContainer" class="site-content__wrapper site-content--wide site-content--with-sidebar">
+        <section class="content-main" id="contentMain">
+          <h1>Figma-to-Code für ETH Entwickler</h1>
+
+          <div class="par parsys basecomponent">
+            <div class="textimage basecomponent">
+              <div class="textimage__wrapper">
+                <div class="text-image">
+                  <h2>Der Figma-to-Code Ansatz</h2>
+                  <p>Diese Herangehensweise nutzt Figma als zentrale Quelle für alle Design-Entscheidungen und automatisiert den Übergang vom Design zum Code. Durch die Kombination von strukturierten Design-Tokens in Figma mit automatisierten Export-Tools und KI-gestützter Codegenerierung vereinfachen wir den Implementierungsprozess für Entwickler.</p>
+                  
+                  <div class="eth-alert">
+                    Dieser Ansatz optimiert den Designer-Entwickler-Workflow und reduziert die Wartungslast für das Design-System-Team erheblich.
+                  </div>
+                  
+                  <div class="greybox parsys basecomponent">
+                    <div class="greybox__wrapper is-themed-light eth-grey">
+                      <div class="text-box">
+                        <div class="parsys basecomponent">
+                          <div class="parsys basecomponent contains-textimage contains-image">
+                            <div class="textimage basecomponent">
+                              <div class="textimage__wrapper is-first">
+                                <div class="text-image cq-dd-image">
+                                  <h3>Zugriff auf das ETH Design System in Figma</h3>
+                                  <p>Als ETH Entwickler benötigen Sie Zugang zur ETH Figma-Bibliothek. Alle Design-Tokens und Komponenten werden von dort aus exportiert.</p>
+                                  
+                                  <a href="#" class="button button--secondary" aria-label="Figma-Zugang anfordern">Figma-Zugang anfordern</a>
+                                  <div class="version-info">
+                                    Design System Version 2.1 • Zuletzt aktualisiert: 12. April 2023
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h2>Der Workflow im Überblick</h2>
+                  
+                  <img src="https://via.placeholder.com/800x300?text=Figma-to-Code+Workflow" alt="Figma-to-Code Workflow Diagram" class="workflow-diagram">
+                  
+                  <ol class="step-list">
+                    <li><strong>Design-Tokens in Figma definieren:</strong> Alle Design-Tokens (Farben, Abstände, Typografie) werden in Figma als Variablen definiert und bilden die Grundlage des Systems.</li>
+                    <li><strong>Automatischer Export der Tokens:</strong> Ein Figma-Plugin exportiert die Design-Tokens in standardisierte Formate (JSON, CSS, SCSS, etc.).</li>
+                    <li><strong>Komponenten in Figma erstellen:</strong> Designer erstellen und dokumentieren UI-Komponenten mit klaren Implementierungsrichtlinien.</li>
+                    <li><strong>KI-gestützte Codegenerierung:</strong> Aus den Figma-Designs werden automatisiert Code-Vorschläge für verschiedene Frameworks generiert.</li>
+                    <li><strong>Entwickler-Handoff über Figma:</strong> Entwickler erhalten detaillierte Spezifikationen direkt in Figma mit Zugriff auf Code-Snippets.</li>
+                  </ol>
+
+                  <h2>Hauptfunktionen</h2>
+                  
+                  <div class="feature-grid">
+                    <div class="feature-card">
+                      <svg class="feature-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                      </svg>
+                      <h3 class="feature-card__title">Tokens als Single Source of Truth</h3>
+                      <p class="feature-card__description">Alle Design-Tokens werden in Figma verwaltet und automatisch in verschiedene Code-Formate exportiert, um Inkonsistenzen zu vermeiden.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                      <svg class="feature-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                      </svg>
+                      <h3 class="feature-card__title">Automatische Code-Generierung</h3>
+                      <p class="feature-card__description">KI-gestützte Tools generieren plattformübergreifenden Code auf Basis der Figma-Designs, um die Implementierung zu beschleunigen.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                      <svg class="feature-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                      </svg>
+                      <h3 class="feature-card__title">Designänderungen verfolgen</h3>
+                      <p class="feature-card__description">Änderungen an Design-Tokens werden automatisch dokumentiert und können über Versionierung nachverfolgt werden.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                      <svg class="feature-card__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                      </svg>
+                      <h3 class="feature-card__title">Detaillierte Spezifikationen</h3>
+                      <p class="feature-card__description">Automatisch generierte Implementierungshinweise mit genauen Angaben zu Abständen, Farben und Interaktionen.</p>
+                    </div>
+                  </div>
+
+                  <h2>Das ETH Figma Design System</h2>
+                  
+                  <div class="figma-embed">
+                    <img src="https://static.figma.com/app/icon/1/favicon.svg" alt="Figma Logo">
+                    <p>ETH Design System Figma Bibliothek (Vorschau)</p>
+                    <button class="button">Öffnen in Figma</button>
+                  </div>
+
+                  <div class="tabs">
+                    <div class="tab active" data-tab="tokens">Design-Tokens</div>
+                    <div class="tab" data-tab="components">Komponenten</div>
+                    <div class="tab" data-tab="developer">Entwickler-Ressourcen</div>
+                  </div>
+                  
+                  <div class="tab-content active" id="tokens-content">
+                    <h3>Design-Tokens in Figma</h3>
+                    <p>Alle ETH Design-Tokens sind als Figma-Variablen definiert und werden automatisch synchronisiert:</p>
+                    <ul>
+                      <li><strong>Farbpalette:</strong> Primär-, Sekundär- und semantische Farben</li>
+                      <li><strong>Typografie:</strong> Schriftarten, -größen, -gewichte und Zeilenabstände</li>
+                      <li><strong>Abstände:</strong> Konsistentes Spacing-System für alle UI-Elemente</li>
+                      <li><strong>Radiusgrößen:</strong> Abgerundete Ecken für verschiedene Komponenten</li>
+                      <li><strong>Schatten:</strong> Elevation-System für 3D-Effekte</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="tab-content" id="components-content">
+                    <h3>Komponenten-Bibliothek</h3>
+                    <p>Die ETH Komponenten sind in Figma erstellt und dokumentiert:</p>
+                    <ul>
+                      <li><strong>Basis-Komponenten:</strong> Buttons, Form-Elemente, Karten, Alerts</li>
+                      <li><strong>Layout-Elemente:</strong> Grid-System, Container, Sektionen</li>
+                      <li><strong>Navigation:</strong> Header, Footer, Breadcrumbs, Menüs</li>
+                      <li><strong>Komplexe Komponenten:</strong> Tabellen, Modals, Stepper</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="tab-content" id="developer-content">
+                    <h3>Entwickler-Ressourcen</h3>
+                    <p>Spezielle Werkzeuge für Entwickler:</p>
+                    <ul>
+                      <li><strong>Token-Export-Plugin:</strong> Tool zum Export von Design-Tokens in verschiedene Code-Formate</li>
+                      <li><strong>Inspect Mode:</strong> Genaue Spezifikationen für jedes Design-Element</li>
+                      <li><strong>Code-Snippets:</strong> KI-generierte Code-Beispiele für jede Komponente</li>
+                      <li><strong>Kommentar-System:</strong> Direktes Feedback zu Designs und Implementierungsdetails</li>
+                    </ul>
+                  </div>
+
+                  <h2>Token Export-Tools</h2>
+                  
+                  <h3>1. Figma Tokens Plugin</h3>
+                  <div class="code-block">
+                    <pre><code class="language-json">// Beispiel für automatisch exportierte JSON-Tokens
+{
+  "colors": {
+    "primary": {
+      "blue": { "value": "#215CAF" },
+      "blue80": { "value": "#4D7DBF" }
+    },
+    "semantic": {
+      "success": { "value": "#2E7B32" },
+      "warning": { "value": "#FDA726" },
+      "error": { "value": "#E2001A" }
+    }
+  },
+  "spacing": {
+    "2": { "value": "0.5rem" },
+    "4": { "value": "1rem" }
+  },
+  // ... weitere Token-Definitionen
+}</code></pre>
+                  </div>
+
+                  <h3>2. AI-basierte Codegenerierung</h3>
+                  <div class="code-block">
+                    <pre><code class="language-jsx">// Beispiel für automatisch generiertes React-Komponenten-Code
+import React from 'react';
+import styles from './Button.module.css';
+
+export const Button = ({ 
+  variant = 'primary',
+  size = 'medium',
+  children,
+  ...props 
+}) => {
+  return (
+    &lt;button 
+      className={`${styles.button} ${styles[variant]} ${styles[size]}`}
+      {...props}
+    &gt;
+      {children}
+    &lt;/button&gt;
+  );
+};</code></pre>
+                  </div>
+
+                  <h2>Implementierung für Entwickler</h2>
+                  
+                  <h3>Schnellstart mit dem Figma-to-Code Workflow</h3>
+                  <ol>
+                    <li>Zugriff auf die ETH Figma-Bibliothek anfordern</li>
+                    <li>Design-Tokens aus Figma exportieren (manuell oder über unser Script)</li>
+                    <li>Token-Dateien in Ihr Projekt integrieren</li>
+                    <li>Komponenten aus den Figma-Spezifikationen implementieren oder generierte Code-Snippets verwenden</li>
+                    <li>Tokenupdates über automatisierte Workflows synchron halten</li>
+                  </ol>
+
+                  <h2>Vorteile für Teams mit begrenzten Ressourcen</h2>
+                  
+                  <ul>
+                    <li><strong>Minimaler Wartungsaufwand:</strong> Das Design-System-Team muss nur Figma aktualisieren, Code wird automatisch generiert</li>
+                    <li><strong>Effizienter Designer-Entwickler-Workflow:</strong> Weniger Missverständnisse und Rückfragen zwischen Teams</li>
+                    <li><strong>Skalierbarkeit:</strong> Auch mit kleinen Teams können umfangreiche Design-System-Komponenten erstellt werden</li>
+                    <li><strong>KI-Unterstützung:</strong> Automatische Codegenerierung reduziert manuelle Implementierungsarbeit</li>
+                    <li><strong>Zentrale Kontrolle:</strong> Änderungen am Design-System können zentral in Figma verwaltet werden</li>
+                  </ul>
+
+                  <h2>Nächste Schritte</h2>
+                  <p>Um mit dem Figma-to-Code Workflow zu beginnen:</p>
+                  <ol>
+                    <li>Fordern Sie Zugang zur ETH Figma-Bibliothek an</li>
+                    <li>Sehen Sie sich unsere <a href="#">Einführungsdokumentation</a> an</li>
+                    <li>Experimentieren Sie mit unserem <a href="#">Token-Export-Tool</a></li>
+                    <li>Kontaktieren Sie uns bei Fragen unter <a href="mailto:design-system@ethz.ch">design-system@ethz.ch</a></li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const downloadButton = document.querySelector('.button--secondary');
+      downloadButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('Anfrage für Figma-Zugang würde hier gesendet werden.');
+      });
+      
+      // Tabs functionality
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // Update active tab
+          tabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Update content
+          const tabId = this.getAttribute('data-tab');
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          document.getElementById(tabId + '-content').classList.add('active');
+        });
+      });
+    });
+  </script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+</body>
+</html> 

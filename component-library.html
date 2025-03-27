@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta property="og:title" content="Komponenten-Bibliothek für ETH Entwickler">
+  <meta property="og:site_name" content="Staffnet">
+  
+  <link rel="stylesheet" href="css.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+  <meta name="theme-color" content="#215CAF">
+
+  <title>Komponenten-Bibliothek für ETH Entwickler – Staffnet | ETH Zürich</title>
+
+  <style>
+    :root {
+      --eth-blue: #215CAF;
+      --eth-blue-80: #4D7DBF;
+      --spacing-2: 0.5rem;
+      --spacing-4: 1rem;
+      --border-radius-md: 0.25rem;
+    }
+
+    .button {
+      background-color: var(--eth-blue);
+      padding: var(--spacing-2) var(--spacing-4);
+      border-radius: var(--border-radius-md);
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .button--secondary {
+      background-color: white;
+      border: 1px solid var(--eth-blue);
+      color: var(--eth-blue);
+    }
+    
+    .color-sample {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.5rem;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+    
+    .version-info {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #666;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .form-group select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+      min-width: 200px;
+    }
+
+    .code-block {
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .component-showcase {
+      border: 1px solid #e0e0e0;
+      border-radius: 0.25rem;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      background-color: #f9f9f9;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .component-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 0.25rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .component-item__preview {
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      min-height: 100px;
+    }
+
+    .component-item__info {
+      padding: 1rem;
+      background-color: #f5f5f5;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .component-item__title {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .component-item__description {
+      margin: 0;
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .eth-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: #8E6713;
+      color: white;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    
+    .eth-button:hover {
+      background-color: #A57A19;
+    }
+    
+    .eth-button:active {
+      background-color: #76550F;
+      transform: translateY(1px);
+    }
+    
+    .eth-button[disabled] {
+      background-color: #E0E0E0;
+      color: #909090;
+      cursor: not-allowed;
+    }
+
+    .eth-button.secondary {
+      background-color: transparent;
+      border: 1px solid #8E6713;
+      color: #8E6713;
+    }
+    
+    .eth-button.secondary:hover {
+      background-color: rgba(142, 103, 19, 0.05);
+      border-color: #A57A19;
+      color: #A57A19;
+    }
+    
+    .eth-button.secondary:active {
+      background-color: rgba(142, 103, 19, 0.1);
+      border-color: #76550F;
+      color: #76550F;
+      transform: translateY(1px);
+    }
+    
+    .eth-button.secondary[disabled] {
+      border-color: #E0E0E0;
+      color: #909090;
+      background-color: transparent;
+      cursor: not-allowed;
+    }
+
+    .eth-alert {
+      padding: 1rem;
+      border-radius: 0.25rem;
+      border-left: 4px solid #215CAF;
+      background-color: #E6EDF7;
+      margin-bottom: 1rem;
+    }
+
+    .eth-alert.success {
+      border-left-color: #2E7B32;
+      background-color: #E8F5E9;
+    }
+
+    .eth-alert.warning {
+      border-left-color: #FDA726;
+      background-color: #FFF8E1;
+    }
+
+    .eth-alert.error {
+      border-left-color: #E2001A;
+      background-color: #FFEBEE;
+    }
+
+    .eth-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background-color: #215CAF;
+      color: white;
+    }
+
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .progress-step:not(:last-child):after {
+      content: '';
+      position: absolute;
+      background-color: #e0e0e0;
+      height: 2px;
+      width: 100%;
+      top: 12px;
+      left: 50%;
+      z-index: 0;
+    }
+
+    .progress-step.active:not(:last-child):after {
+      background-color: #215CAF;
+    }
+
+    .progress-step__marker {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      z-index: 1;
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .progress-step.active .progress-step__marker {
+      background-color: #215CAF;
+      color: white;
+    }
+
+    .progress-step.completed .progress-step__marker {
+      background-color: #2E7B32;
+      color: white;
+    }
+
+    .progress-step__label {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .progress-step.active .progress-step__label {
+      color: #215CAF;
+      font-weight: 500;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 1rem;
+    }
+
+    .tab {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tab.active {
+      border-bottom: 2px solid var(--eth-blue);
+      color: var(--eth-blue);
+      font-weight: bold;
+    }
+
+    /* Custom theme overrides for Prism */
+    code[class*="language-"], pre[class*="language-"] {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* Optional: theme customization for better ETH branding */
+    .token.property, .token.tag, .token.constant, .token.symbol, .token.deleted {
+      color: #215CAF;
+    }
+    
+    .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted {
+      color: #007894;
+    }
+  </style>
+</head>
+
+<body class="widepage eth-blue">
+  <div class="site-wrapper overviewpage">
+    <header class="site-header header--with-department-breadcrumb">
+      <div class="header__logos header__container">
+        <a href="https://ethz.ch/de.html" title="Zur Startseite der ETH Zürich">
+          <svg viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg" class="main-eth-logo" aria-label="ETH homepage">
+  <path
+    d="M43.6892 7.59685H39.3218L40.8555 0H3.90295L0 19.6252H14.7315L15.7334 14.5606H7.02833L7.52612 12.0283H16.2369L17.1209 7.59685H8.43034L8.92687 5.06457H22.7592L19.8638 19.6252H25.8707L28.7649 5.06457H33.8077L30.9135 19.6252H36.9665L38.4642 12.0283H42.8303L41.3338 19.6252H47.3577L51.2632 0H45.2229L43.6892 7.59685ZM69.4622 2.53228H71.4717L71.9695 0H69.9695L69.4622 2.53228ZM74.616 2.53228H76.6267L77.1232 0H75.1232L74.616 2.53228ZM93.4111 2.53228H95.4205L95.9196 0H93.9183L93.4111 2.53228ZM103.47 6.27247C99.9631 6.27247 97.5024 8.76677 96.7148 13.1172C96.5907 13.7981 96.5275 14.4888 96.5258 15.181C96.5258 18.1527 98.3109 20 101.189 20C102.013 20.0022 102.829 19.8372 103.588 19.515C104.347 19.1928 105.033 18.7199 105.606 18.1248L105.623 18.1058L104.509 16.7333L104.489 16.7093L104.467 16.7321C104.087 17.2105 103.604 17.597 103.055 17.8628C102.506 18.1287 101.905 18.2671 101.295 18.2679C99.9234 18.2679 98.4571 17.4411 98.4571 15.1266C98.4621 14.4552 98.5331 13.786 98.6688 13.1286C98.8751 11.7182 99.4666 10.3928 100.378 9.29981C100.745 8.89298 101.193 8.56784 101.694 8.34522C102.194 8.1226 102.734 8.00742 103.281 8.00708C103.806 7.9833 104.326 8.10937 104.782 8.37067C105.238 8.63197 105.611 9.0178 105.858 9.4834L105.874 9.50999L107.293 8.29956L107.313 8.28183L107.298 8.26031C106.89 7.62018 106.321 7.09939 105.649 6.75041C104.977 6.40142 104.225 6.23657 103.47 6.27247ZM116.295 5.98822C115.59 5.9532 114.886 6.07022 114.23 6.33141C113.573 6.59261 112.98 6.99193 112.49 7.50252L113.998 0H112.054L108.15 19.6252H110.093L111.714 11.3807C112.408 7.90642 115.092 7.73043 115.621 7.73043C115.937 7.69809 116.256 7.73604 116.555 7.84158C116.855 7.94713 117.128 8.11768 117.354 8.3411C117.581 8.56453 117.755 8.83536 117.866 9.13432C117.977 9.43329 118.02 9.75306 117.994 10.0709C117.984 10.4893 117.939 10.9062 117.858 11.3168L116.209 19.6252H118.15L119.855 11.1364C119.943 10.6954 119.989 10.2471 119.991 9.79741C120.026 9.29629 119.955 8.79341 119.783 8.32176C119.611 7.85011 119.342 7.42034 118.993 7.06064C118.644 6.70095 118.223 6.41946 117.758 6.23464C117.293 6.04981 116.795 5.96584 116.295 5.98822ZM90.0967 19.5929L90.0904 19.6258H92.0066L94.6215 6.33134H92.7375L90.0967 19.5929ZM54.9538 8.19447L54.9481 8.23056H61.4522L52.8769 18.021L52.8731 18.0261L52.5511 19.6258H61.7868L62.1503 17.7266H55.2462L63.8466 7.93618L63.8504 7.92985L64.1736 6.33134H55.3129L54.9538 8.19447ZM86.9064 6.16928C86.2145 6.15103 85.5279 6.29363 84.8999 6.58596C84.272 6.87828 83.7198 7.31243 83.2864 7.85451L83.5838 6.3611L83.5888 6.33134H81.6985L79.0854 19.5929L79.0803 19.6258H80.999L82.597 11.4909C83.006 9.4049 84.5932 7.88996 86.3739 7.88996C86.7328 7.88131 87.0882 7.96143 87.4089 8.12327C87.7297 8.28511 88.0059 8.52371 88.2133 8.81805L88.2322 8.8421L89.7879 7.43415L89.7728 7.41516C89.4206 7.00234 88.9794 6.67558 88.4828 6.4597C87.9861 6.24383 87.447 6.1445 86.9064 6.16928ZM75.3318 6.33134H77.275L77.27 6.363L74.6588 19.6258H72.7678L72.7741 19.5929L73.0243 18.2128C72.5408 18.7377 71.9491 19.1504 71.2906 19.422C70.6321 19.6935 69.9226 19.8176 69.2114 19.7854C68.7188 19.8075 68.227 19.7247 67.7685 19.5423C67.31 19.3599 66.8951 19.0821 66.5511 18.727C66.2071 18.372 65.9418 17.9479 65.7726 17.4825C65.6033 17.0171 65.5341 16.521 65.5694 16.0268C65.5748 15.6225 65.6206 15.2198 65.7061 14.8246L65.7282 14.7043L67.3803 6.33134H69.2978L67.6677 14.5283C67.5904 14.9334 67.5468 15.3442 67.5372 15.7565C67.5127 16.0718 67.5576 16.3887 67.6687 16.6847C67.7798 16.9806 67.9545 17.2483 68.1802 17.4688C68.406 17.6892 68.6773 17.857 68.9749 17.9602C69.2724 18.0635 69.589 18.0995 69.902 18.0659C70.4219 18.0659 73.0457 17.8912 73.7306 14.4619L75.3318 6.33134Z">
+  </path></svg> 
+        </a>
+        <div class="header__headlines">
+          <h2 class="header__headline--big" aria-label="Header Staffnet">
+            <a href="#" title="Startseite">Staffnet</a>
+          </h2>
+        </div>
+      </div>
+    </header>
+
+    <section id="content" class="site-content">
+      <div id="contentContainer" class="site-content__wrapper site-content--wide site-content--with-sidebar">
+        <section class="content-main" id="contentMain">
+          <h1>ETH Komponenten-Bibliothek (Web Components)</h1>
+
+          <div class="par parsys basecomponent">
+            <div class="textimage basecomponent">
+              <div class="textimage__wrapper">
+                <div class="text-image">
+                  <h2>Der Komponenten-Bibliothek Ansatz</h2>
+                  <p>Diese Herangehensweise bietet eine fokussierte Sammlung von Framework-unabhängigen Komponenten, die in jedem Web-Projekt verwendet werden können. Wir konzentrieren uns auf die wichtigsten Markenelemente und Interaktionsmuster der ETH Zürich und stellen sie als Web Components bereit.</p>
+                  
+                  <div class="eth-alert">
+                    Diese Komponenten-Bibliothek befindet sich in aktiver Entwicklung. Wir konzentrieren uns auf Kernkomponenten und erweitern die Bibliothek schrittweise basierend auf dem Feedback der ETH-Community.
+                  </div>
+                  
+                  <div class="greybox parsys basecomponent">
+                    <div class="greybox__wrapper is-themed-light eth-grey">
+                      <div class="text-box">
+                        <div class="parsys basecomponent">
+                          <div class="parsys basecomponent contains-textimage contains-image">
+                            <div class="textimage basecomponent">
+                              <div class="textimage__wrapper is-first">
+                                <div class="text-image cq-dd-image">
+                                  <h3>Komponenten-Bibliothek installieren</h3>
+                                  <div class="form-group">
+                                    <label for="format-select">Installationsmethode:</label>
+                                    <select id="format-select">
+                                      <option value="npm">NPM-Paket</option>
+                                      <option value="cdn">CDN-Integration</option>
+                                      <option value="esm">ES Module Import</option>
+                                    </select>
+                                  </div>
+
+                                  <a href="#" class="button button--secondary" aria-label="ETH Komponenten-Bibliothek herunterladen">Bibliothek installieren</a>
+                                  <div class="version-info">
+                                    Version 0.8.2 • Zuletzt aktualisiert: 5. April 2023
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h2>Schlüsselmerkmale</h2>
+                  <ul>
+                    <li><strong>Web Components:</strong> Funktionieren in jedem Framework (React, Vue, Angular) oder ohne Framework</li>
+                    <li><strong>Fokussierter Umfang:</strong> Enthalten nur die wichtigsten, markenrelevanten UI-Elemente</li>
+                    <li><strong>Zukunftssicher:</strong> Basierend auf Webstandards</li>
+                    <li><strong>Barrierefreiheit:</strong> Erfüllt WCAG 2.1 AA-Standards</li>
+                    <li><strong>Responsive Design:</strong> Optimiert für alle Bildschirmgrößen</li>
+                  </ul>
+
+                  <h2>Schnellstart</h2>
+                  
+                  <h3>1. Installation</h3>
+                  <div class="code-block">
+                    <span class="code-label">Bash</span>
+                    <pre><code class="language-bash">npm install @ethzurich/web-components</code></pre>
+                  </div>
+
+                  <h3>2. Import und Registrierung</h3>
+                  <div class="code-block">
+                    <span class="code-label">JavaScript</span>
+                    <pre><code class="language-javascript">// In Ihrer JavaScript-Datei
+import '@ethzurich/web-components';</code></pre>
+                  </div>
+
+                  <h3>3. Verwendung in HTML</h3>
+                  <div class="code-block">
+                    <span class="code-label">HTML</span>
+                    <pre><code class="language-html">&lt;!-- In Ihrem HTML --&gt;
+&lt;eth-button variant="primary"&gt;ETH Zürich Button&lt;/eth-button&gt;</code></pre>
+                  </div>
+
+                  <h2>Verfügbare Komponenten</h2>
+                  
+                  <div class="component-grid">
+                    <div class="component-item">
+                      <div class="component-item__preview">
+                        <button class="eth-button">Standard Button</button>
+                      </div>
+                      <div class="component-item__info">
+                        <h3 class="component-item__title">eth-button</h3>
+                        <p class="component-item__description">Schaltflächen in ETH-Styling mit verschiedenen Varianten, Zuständen und Größen</p>
+                      </div>
+                    </div>
+                    
+                    <div class="component-item">
+                      <div class="component-item__preview">
+                        <div class="eth-alert">Dies ist eine Info-Meldung</div>
+                      </div>
+                      <div class="component-item__info">
+                        <h3 class="component-item__title">eth-alert</h3>
+                        <p class="component-item__description">Meldungen und Hinweise für Benutzer</p>
+                      </div>
+                    </div>
+                    
+                    <div class="component-item">
+                      <div class="component-item__preview">
+                        <span class="eth-badge">Neu</span>
+                      </div>
+                      <div class="component-item__info">
+                        <h3 class="component-item__title">eth-badge</h3>
+                        <p class="component-item__description">Labels und Kennzeichnungen</p>
+                      </div>
+                    </div>
+                    
+                    <div class="component-item">
+                      <div class="component-item__preview">
+                        <div class="progress-steps">
+                          <div class="progress-step completed">
+                            <div class="progress-step__marker">✓</div>
+                            <div class="progress-step__label">Schritt 1</div>
+                          </div>
+                          <div class="progress-step active">
+                            <div class="progress-step__marker">2</div>
+                            <div class="progress-step__label">Schritt 2</div>
+                          </div>
+                          <div class="progress-step">
+                            <div class="progress-step__marker">3</div>
+                            <div class="progress-step__label">Schritt 3</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="component-item__info">
+                        <h3 class="component-item__title">eth-stepper</h3>
+                        <p class="component-item__description">Mehrstufige Prozesse visualisieren</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h2>Komponenten-Demo: eth-button</h2>
+                  
+                  <div class="component-showcase">
+                    <div class="tabs">
+                      <div class="tab active">Vorschau</div>
+                      <div class="tab">Code</div>
+                    </div>
+                    
+                    <div style="margin: 1rem 0;">
+                      <button class="eth-button" style="margin-right: 8px;">Primär</button>
+                      <button class="eth-button secondary" style="margin-right: 8px;">Sekundär</button>
+                      <button class="eth-button" disabled>Deaktiviert</button>
+                      
+                      <div style="margin-top: 1rem;">
+                        <button class="eth-button" style="margin-right: 8px;">
+                          <span style="display: inline-flex; align-items: center; margin-right: 4px;">+</span>
+                          Mit Icon
+                        </button>
+                        <button class="eth-button secondary" style="margin-right: 8px;">
+                          <span style="display: inline-flex; align-items: center; margin-right: 4px;">+</span>
+                          Mit Icon
+                        </button>
+                        <button class="eth-button secondary" style="width: 44px; height: 44px; padding: 0; margin-right: 8px; display: inline-flex; align-items: center; justify-content: center;">+</button>
+                      </div>
+                    </div>
+                    
+                    <div class="code-block">
+                      <span class="code-label">HTML</span>
+                      <pre><code class="language-html">&lt;eth-button variant="primary"&gt;Primär&lt;/eth-button&gt;
+&lt;eth-button variant="secondary"&gt;Sekundär&lt;/eth-button&gt;
+&lt;eth-button disabled&gt;Deaktiviert&lt;/eth-button&gt;
+
+&lt;!-- Mit Icon --&gt;
+&lt;eth-button variant="primary"&gt;
+  &lt;eth-icon name="plus"&gt;&lt;/eth-icon&gt;
+  Mit Icon
+&lt;/eth-button&gt;
+
+&lt;!-- Icon-Button --&gt;
+&lt;eth-button variant="secondary" size="icon-only"&gt;
+  &lt;eth-icon name="plus"&gt;&lt;/eth-icon&gt;
+&lt;/eth-button&gt;</code></pre>
+                    </div>
+                    
+                    <h4>Eigenschaften</h4>
+                    <ul>
+                      <li><code>variant</code>: "primary" (Standard), "secondary", "text"</li>
+                      <li><code>size</code>: "small", "medium" (Standard), "large", "icon-only"</li>
+                      <li><code>disabled</code>: Boolean</li>
+                      <li><code>href</code>: Optional, um den Button als Link zu rendern</li>
+                      <li><code>icon</code>: Optional, um ein Icon innerhalb des Buttons anzuzeigen</li>
+                      <li><code>iconPosition</code>: "start" (Standard), "end"</li>
+                    </ul>
+                  </div>
+
+                  <h2>Framework-Integration</h2>
+                  
+                  <h3>React</h3>
+                  <div class="code-block">
+                    <span class="code-label">JSX</span>
+                    <pre><code class="language-jsx">import '@ethzurich/web-components';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;eth-button variant="primary"&gt;ETH Button&lt;/eth-button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                  </div>
+                  
+                  <h3>Vue</h3>
+                  <div class="code-block">
+                    <span class="code-label">Vue</span>
+                    <pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;eth-button variant="primary"&gt;ETH Button&lt;/eth-button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import '@ethzurich/web-components';
+&lt;/script&gt;</code></pre>
+                  </div>
+                  
+                  <h2>Ressourcenschonender Ansatz</h2>
+                  <p>Unsere Komponenten-Bibliothek ist gezielt für Teams mit begrenzten Ressourcen konzipiert:</p>
+                  
+                  <ul>
+                    <li><strong>Fokussierter Umfang:</strong> Wir konzentrieren uns nur auf die wichtigsten, markenrelevanten Komponenten</li>
+                    <li><strong>Framework-unabhängig:</strong> Eine Bibliothek für alle Projekte, unabhängig vom verwendeten Framework</li>
+                    <li><strong>Einfache Wartung:</strong> Web Components basieren auf Webstandards und erfordern weniger Updates</li>
+                    <li><strong>Selektive Nutzung:</strong> Entwickler können nur die Komponenten importieren, die sie tatsächlich benötigen</li>
+                    <li><strong>AI-unterstützte Entwicklung:</strong> Wir nutzen KI-Tools für Codegenerierung und Tests</li>
+                  </ul>
+
+                  <h2>Nächste Schritte und Roadmap</h2>
+                  <p>Die Komponenten-Bibliothek wird kontinuierlich erweitert. In den kommenden Monaten planen wir:</p>
+                  
+                  <ul>
+                    <li>Formular-Komponenten (Eingabefelder, Checkboxen, Radiobuttons)</li>
+                    <li>Navigation (Header, Footer, Breadcrumbs)</li>
+                    <li>Responsive Tabellen</li>
+                    <li>Verbesserte Dokumentation und mehr Beispiele</li>
+                  </ul>
+                  
+                  <p>Für Fragen, Feedback oder Vorschläge kontaktieren Sie bitte das ETH Design-System-Team unter <a href="mailto:design-system@ethz.ch">design-system@ethz.ch</a>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const downloadButton = document.querySelector('.button--secondary');
+      const formatSelect = document.getElementById('format-select');
+      
+      downloadButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        const format = formatSelect.value;
+        alert('Installation der ETH Komponenten-Bibliothek via ' + format + ' würde hier starten.');
+      });
+      
+      // Tabs functionality
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          tabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+  
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+</body>
+</html> 
