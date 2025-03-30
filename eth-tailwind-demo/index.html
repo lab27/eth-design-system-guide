@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETH Zürich Tailwind CSS Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'ETH Neue';
+      src: local('Helvetica');
+      font-weight: normal;
+    }
+    body {
+      font-family: 'ETH Neue', Helvetica, Arial, sans-serif;
+    }
+    .eth-blue {
+      background-color: #0028A5;
+    }
+    .eth-highlight {
+      background-color: #CCD6EE;
+    }
+    pre {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <header class="eth-blue text-white py-6">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl font-bold">ETH Zürich Tailwind CSS Demo</h1>
+      <p class="mt-2">Demonstrate how easy it is to theme Tailwind applications with ETH design tokens</p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold mb-4">Proof of Concept</h2>
+      <p class="mb-4">
+        This demo shows how a developer can easily theme their Tailwind CSS application using ETH Zürich design tokens. 
+        Instead of custom coding color values, spacing, typography, and other design elements, developers can simply 
+        import the ETH Tailwind configuration to immediately apply the institutional branding.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div class="border rounded-lg overflow-hidden">
+          <div class="bg-gray-200 p-3 font-medium">Before: Generic Tailwind Application</div>
+          <div class="p-4">
+            <img src="before-screenshot.png" alt="Screenshot of application before ETH styling" class="w-full border rounded-lg mb-4">
+            <p class="text-gray-700 mb-3">
+              A generic application using default Tailwind CSS colors and styling. Notice the standard blue buttons, gray backgrounds, and default font.
+            </p>
+            <a href="before/index.html" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded inline-block">
+              View Generic App
+            </a>
+          </div>
+        </div>
+        
+        <div class="border rounded-lg overflow-hidden">
+          <div class="eth-blue text-white p-3 font-medium">After: ETH Themed Application</div>
+          <div class="p-4">
+            <img src="after-screenshot.png" alt="Screenshot of application with ETH styling" class="w-full border rounded-lg mb-4">
+            <p class="text-gray-700 mb-3">
+              The same application after applying ETH Zürich design tokens. Notice the ETH blue, consistent color palette, and proper ETH styling.
+            </p>
+            <a href="after/index.html" class="eth-blue text-white py-2 px-4 rounded inline-block hover:bg-blue-800">
+              View ETH Themed App
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold mb-4">How It Works</h2>
+      
+      <p class="mb-4">
+        Implementing ETH Zürich design tokens in your Tailwind CSS project is straightforward:
+      </p>
+      
+      <ol class="list-decimal pl-5 mb-6 space-y-2">
+        <li>Download the ETH Tailwind configuration file</li>
+        <li>Import it into your Tailwind config</li>
+        <li>Start using ETH-specific class names like <code class="bg-gray-100 px-1 rounded">bg-eth-blue</code> instead of <code class="bg-gray-100 px-1 rounded">bg-blue-500</code></li>
+      </ol>
+      
+      <div class="eth-highlight p-4 rounded-lg mb-6">
+        <h3 class="font-bold mb-2">The ETH Tailwind Configuration</h3>
+        <p class="mb-2">Here's a snippet of the ETH Tailwind config file:</p>
+        <pre class="bg-gray-800 text-gray-100 p-3 rounded-lg text-sm"><code>module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        // Primary colors
+        'eth-blue': '#0028A5',
+        'eth-blue-80': '#3353B7',
+        'eth-blue-60': '#6680CA',
+        'eth-blue-40': '#99ADDC',
+        'eth-blue-20': '#CCD6EE',
+        
+        // Secondary colors
+        'eth-turquoise': '#00A6D6',
+        'eth-petrol': '#006E85',
+        'eth-bordeaux': '#AE0F0A',
+        'eth-orange': '#F07E00',
+        
+        // And more...
+      }
+    }
+  }
+};</code></pre>
+      </div>
+      
+      <a href="eth-tailwind-config.js" download class="eth-blue text-white py-2 px-4 rounded inline-block hover:bg-blue-800">
+        Download ETH Tailwind Config
+      </a>
+    </section>
+    
+    <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold mb-4">Benefits</h2>
+      
+      <ul class="space-y-3">
+        <li class="flex items-start">
+          <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span><strong>Brand Consistency:</strong> Ensures all applications follow ETH Zürich brand guidelines</span>
+        </li>
+        <li class="flex items-start">
+          <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span><strong>Development Speed:</strong> Reduces time spent implementing design specifications</span>
+        </li>
+        <li class="flex items-start">
+          <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span><strong>Maintainability:</strong> Centralized design tokens make updates easier to implement</span>
+        </li>
+        <li class="flex items-start">
+          <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span><strong>Simplicity:</strong> Developers don't need to memorize exact color codes or spacing values</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+  
+  <footer class="bg-gray-100 py-4 mt-8">
+    <div class="container mx-auto px-4 text-center text-gray-600">
+      <p>ETH Zürich Design Tokens Demo &copy; 2025</p>
+    </div>
+  </footer>
+</body>
+</html> 

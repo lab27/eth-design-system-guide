@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETH Tailwind Demo - After</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Import ETH tokens into Tailwind config
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Primary colors
+            'eth-blue': '#0028A5',
+            'eth-blue-80': '#3353B7',
+            'eth-blue-60': '#6680CA',
+            'eth-blue-40': '#99ADDC',
+            'eth-blue-20': '#CCD6EE',
+            
+            // Secondary colors
+            'eth-turquoise': '#00A6D6',
+            'eth-petrol': '#006E85',
+            'eth-bordeaux': '#AE0F0A',
+            'eth-orange': '#F07E00',
+            
+            // Semantic colors
+            'eth-success': '#00843D',
+            'eth-warning': '#F7A600',
+            'eth-error': '#E50046',
+            'eth-info': '#0028A5',
+            
+            // Neutral colors
+            'eth-black': '#000000',
+            'eth-grey-90': '#1A1A1A',
+            'eth-grey-80': '#333333',
+            'eth-grey-70': '#4D4D4D',
+            'eth-grey-60': '#666666',
+            'eth-grey-50': '#808080',
+            'eth-grey-40': '#999999',
+            'eth-grey-30': '#B3B3B3',
+            'eth-grey-20': '#CCCCCC',
+            'eth-grey-10': '#E6E6E6',
+            'eth-white': '#FFFFFF',
+          },
+          // Font families
+          fontFamily: {
+            'eth': ['ETH Neue', 'Helvetica', 'Arial', 'sans-serif'],
+            'eth-old': ['ETH Old', 'Georgia', 'Times', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  
+  <!-- Faking ETH Neue font - in a real implementation, you would import the actual font -->
+  <style>
+    @font-face {
+      font-family: 'ETH Neue';
+      src: local('Helvetica');
+      font-weight: normal;
+    }
+    @font-face {
+      font-family: 'ETH Old';
+      src: local('Georgia');
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body class="bg-eth-grey-10 min-h-screen font-eth">
+  <div class="container mx-auto px-4 py-8">
+    <header class="bg-eth-blue text-white p-4 rounded-md mb-8">
+      <h1 class="text-2xl font-bold">ETH Styled Application</h1>
+      <p class="text-sm">Using ETH Zürich design tokens</p>
+    </header>
+
+    <main class="bg-white p-6 rounded-md shadow-md">
+      <h2 class="text-xl font-semibold text-eth-grey-90 mb-4">Welcome to our application</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-eth-blue-20 p-4 rounded-md">
+          <h3 class="text-lg font-medium text-eth-blue mb-2">Feature 1</h3>
+          <p class="text-eth-grey-70">This is a feature description with ETH blue and grey color tokens.</p>
+          <button class="mt-4 bg-eth-blue hover:bg-eth-blue-80 text-white py-2 px-4 rounded-md">
+            Learn More
+          </button>
+        </div>
+        
+        <div class="bg-eth-blue-20 p-4 rounded-md">
+          <h3 class="text-lg font-medium text-eth-blue mb-2">Feature 2</h3>
+          <p class="text-eth-grey-70">Another feature using ETH spacing and colors for consistent branding.</p>
+          <button class="mt-4 bg-eth-turquoise hover:bg-eth-petrol text-white py-2 px-4 rounded-md">
+            Explore
+          </button>
+        </div>
+        
+        <div class="bg-eth-blue-20 p-4 rounded-md">
+          <h3 class="text-lg font-medium text-eth-blue mb-2">Feature 3</h3>
+          <p class="text-eth-grey-70">The third feature styled with ETH design tokens.</p>
+          <button class="mt-4 bg-eth-bordeaux hover:bg-eth-orange text-white py-2 px-4 rounded-md">
+            Get Started
+          </button>
+        </div>
+      </div>
+      
+      <div class="mt-8 pt-6 border-t border-eth-grey-20">
+        <form class="space-y-4">
+          <div>
+            <label class="block text-eth-grey-80 mb-2" for="email">Email</label>
+            <input id="email" type="email" class="w-full p-2 border border-eth-grey-30 rounded-md" placeholder="Enter your email">
+          </div>
+          
+          <div>
+            <label class="block text-eth-grey-80 mb-2" for="message">Message</label>
+            <textarea id="message" class="w-full p-2 border border-eth-grey-30 rounded-md" rows="4" placeholder="Enter your message"></textarea>
+          </div>
+          
+          <button type="submit" class="bg-eth-blue hover:bg-eth-blue-80 text-white py-2 px-6 rounded-md">
+            Submit
+          </button>
+        </form>
+      </div>
+    </main>
+    
+    <footer class="mt-8 text-center text-eth-grey-60 text-sm">
+      <p>ETH Styled Application &copy; 2025</p>
+    </footer>
+
+    <!-- Demo Banner showing token conversion -->
+    <div class="fixed bottom-0 left-0 right-0 bg-eth-blue text-white p-4 text-center">
+      <p class="text-sm">This application has been themed using ETH Zürich design tokens in Tailwind CSS</p>
+      <div class="flex justify-center mt-2 space-x-4">
+        <a href="../before/index.html" class="underline">View Original</a>
+        <a href="../after/index.html" class="underline">View ETH Themed</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 

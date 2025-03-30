@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETH Zürich Design Tokens</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DIN Next', Arial, Helvetica, sans-serif;
+      color: #333333;
+      line-height: 1.5;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      color: #222222;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      margin-top: 2.5rem;
+      color: #222222;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: #222222;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #666666;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    /* Download section */
+    .download-section {
+      background-color: #F6F6F6;
+      padding: 1.5rem;
+      border-radius: 0.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #4D4D4D;
+    }
+
+    select {
+      width: 100%;
+      max-width: 300px;
+      padding: 0.5rem;
+      border: 1px solid #CCCCCC;
+      border-radius: 0.25rem;
+      background-color: white;
+      font-family: inherit;
+      font-size: 16px;
+    }
+
+    .download-button {
+      background-color: #0028A5;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.25rem;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    .download-button:hover {
+      background-color: #001971;
+    }
+
+    .version-info {
+      margin-top: 1rem;
+      font-size: 14px;
+      color: #666666;
+    }
+
+    /* Feature grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .feature-card {
+      border: 1px solid #CCCCCC;
+      border-radius: 0.25rem;
+      padding: 1rem;
+    }
+
+    /* Token categories */
+    .token-category {
+      border: 1px solid #CCCCCC;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .token-category-header {
+      background-color: #F6F6F6;
+      padding: 1rem;
+      font-weight: 500;
+    }
+
+    .token-category-body {
+      padding: 1rem;
+    }
+
+    /* Color samples */
+    .color-samples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .color-sample {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.25rem;
+    }
+
+    /* Code block */
+    .code-block {
+      background-color: #F6F6F6;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 1rem 0;
+    }
+
+    /* Implementation guide */
+    .guide-container {
+      border: 1px solid #CCCCCC;
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>ETH Zürich Design Tokens</h1>
+      <p>Access and download the official ETH Zürich design tokens for use in your applications and websites.
+        These tokens ensure visual consistency across all ETH Zürich digital products.</p>
+    </header>
+
+    <section class="download-section">
+      <h2>Download Tokens</h2>
+      <div class="form-group">
+        <label for="format-select">Select Format:</label>
+        <select id="format-select">
+          <option value="json">JSON (Recommended)</option>
+          <option value="css">CSS Variables</option>
+          <option value="scss">SCSS Variables</option>
+          <option value="tailwind">Tailwind Config</option>
+        </select>
+      </div>
+
+      <button id="download-button" class="download-button">Download Tokens</button>
+
+      <div class="version-info">
+        Version 1.2.0 • Last updated: February 15, 2025
+      </div>
+    </section>
+
+    <section>
+      <h2>What are Design Tokens?</h2>
+      <p>Design tokens are the visual design atoms of the design system — specifically, they are named entities that
+        store visual design attributes. We use them in place of hard-coded values to ensure flexibility and maintain a
+        consistent visual language.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Consistency</h3>
+          <p>Tokens ensure all ETH Zürich digital products share the same visual foundation.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Efficiency</h3>
+          <p>Implement designs faster using predefined tokens rather than creating styles from scratch.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Accessibility</h3>
+          <p>Our tokens are created with accessibility guidelines in mind.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Scalability</h3>
+          <p>Easily adapt to different platforms and screen sizes with responsive token values.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Token Categories</h2>
+
+      <div class="token-category">
+        <div class="token-category-header">Colors</div>
+        <div class="token-category-body">
+          <p>Color tokens include primary ETH Zürich blues, secondary colors, neutral grays, and semantic colors for
+            statuses.</p>
+          <div class="color-samples">
+            <div class="color-sample" style="background-color: #0028A5;" title="ETH Blue"></div>
+            <div class="color-sample" style="background-color: #3353B7;" title="ETH Blue 80%"></div>
+            <div class="color-sample" style="background-color: #6680CA;" title="ETH Blue 60%"></div>
+            <div class="color-sample" style="background-color: #00A6D6;" title="Turquoise"></div>
+            <div class="color-sample" style="background-color: #006E85;" title="Petrol"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="token-category">
+        <div class="token-category-header">Typography</div>
+        <div class="token-category-body">
+          <p>Typography tokens include font families, sizes, weights, and line heights used across ETH Zürich
+            properties.</p>
+        </div>
+      </div>
+
+      <div class="token-category">
+        <div class="token-category-header">Spacing</div>
+        <div class="token-category-body">
+          <p>Spacing tokens define consistent margins, padding, and layout spacing throughout the design system.</p>
+        </div>
+      </div>
+
+      <div class="token-category">
+        <div class="token-category-header">Other Tokens</div>
+        <div class="token-category-body">
+          <p>Additional tokens include shadows, border radiuses, breakpoints, and more.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Implementation Guide</h2>
+      <div class="guide-container">
+        <div class="token-category-body">
+          <h3>Basic Usage in JavaScript</h3>
+          <pre class="code-block">// Define your tokens directly or load them from your server
+const tokens = {
+  colors: {
+    primary: {
+      'eth-blue': { value: '#0028A5' }
+    }
+  },
+  spacing: {
+    '2': { value: '0.5rem' },
+    '4': { value: '1rem' }
+  },
+  borderRadius: {
+    md: { value: '0.25rem' }
+  }
+};
+
+// Use in your component
+const Button = ({ children }) => (
+  <button 
+    style={{ 
+      backgroundColor: tokens.colors.primary['eth-blue'].value,
+      padding: `${tokens.spacing['2'].value} ${tokens.spacing['4'].value}`,
+      borderRadius: tokens.borderRadius.md.value,
+    }}
+  >
+    {children}
+  </button>
+);</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Need Help?</h2>
+      <p>
+        If you have questions about implementing these tokens or need further assistance,
+        please contact the ETH Zürich digital brand team at <a href="mailto:design-system@ethz.ch"
+          style="color: #0028A5; text-decoration: underline;">design-system@ethz.ch</a>.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // Sample token data (in a real implementation, this would be loaded from a server)
+    const tokenData = {
+      colors: {
+        primary: {
+          "eth-blue": { value: "#0028A5", description: "Primary ETH Zürich blue" },
+          "eth-blue-80": { value: "#3353B7", description: "80% ETH blue" }
+        },
+        secondary: {
+          turquoise: { value: "#00A6D6", description: "Secondary turquoise color" }
+        }
+      },
+      spacing: {
+        "2": { value: "0.5rem", description: "2 unit spacing (8px)" },
+        "4": { value: "1rem", description: "4 unit spacing (16px)" }
+      }
+    };
+
+    // Download functionality
+    document.getElementById('download-button').addEventListener('click', function () {
+      const format = document.getElementById('format-select').value;
+      let content, filename, type;
+
+      switch (format) {
+        case 'json':
+          content = JSON.stringify(tokenData, null, 2);
+          filename = 'eth-zurich-tokens.json';
+          type = 'application/json';
+          break;
+        case 'css':
+          content = `:root {\n  --eth-blue: ${tokenData.colors.primary["eth-blue"].value};\n  --eth-blue-80: ${tokenData.colors.primary["eth-blue-80"].value};\n  --turquoise: ${tokenData.colors.secondary.turquoise.value};\n  --spacing-2: ${tokenData.spacing["2"].value};\n  --spacing-4: ${tokenData.spacing["4"].value};\n}`;
+          filename = 'eth-zurich-tokens.css';
+          type = 'text/css';
+          break;
+        case 'scss':
+          content = `$eth-blue: ${tokenData.colors.primary["eth-blue"].value};\n$eth-blue-80: ${tokenData.colors.primary["eth-blue-80"].value};\n$turquoise: ${tokenData.colors.secondary.turquoise.value};\n$spacing-2: ${tokenData.spacing["2"].value};\n$spacing-4: ${tokenData.spacing["4"].value};`;
+          filename = 'eth-zurich-tokens.scss';
+          type = 'text/scss';
+          break;
+        case 'tailwind':
+          content = `module.exports = {\n  theme: {\n    extend: {\n      colors: {\n        'eth-blue': '${tokenData.colors.primary["eth-blue"].value}',\n        'eth-blue-80': '${tokenData.colors.primary["eth-blue-80"].value}',\n        'turquoise': '${tokenData.colors.secondary.turquoise.value}',\n      },\n      spacing: {\n        '2': '${tokenData.spacing["2"].value}',\n        '4': '${tokenData.spacing["4"].value}',\n      }\n    }\n  }\n}`;
+          filename = 'tailwind.config.js';
+          type = 'application/javascript';
+          break;
+      }
+
+      // Create a download link
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up
+      setTimeout(function () {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 100);
+    });
+  </script>
+</body>
+
+</html>
